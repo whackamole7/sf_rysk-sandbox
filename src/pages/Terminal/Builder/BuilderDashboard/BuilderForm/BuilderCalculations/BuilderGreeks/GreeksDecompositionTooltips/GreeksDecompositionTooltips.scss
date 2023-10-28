@@ -1,0 +1,14 @@
+@import '../../../../../../../../style/vars.scss';
+
+
+.GreeksDecompositionTooltips {
+	.StrikeBrief {
+		&__icon {
+			width: 15px;
+		}
+
+		&__info-card {
+			font-size: 10px;
+		}
+	}
+}

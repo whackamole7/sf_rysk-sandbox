@@ -1,0 +1,17 @@
+@import '../../../../../../../../../style/vars.scss';
+
+
+.CollateralRangeBtns {
+	white-space: nowrap;
+	font-size: 11px;
+	color: $lgrey;
+	cursor: default;
+
+	button {
+		cursor: pointer;
+		transition: color .2s ease;
+		&:hover, &:focus-visible {
+			color: $white;
+		}
+	}
+}

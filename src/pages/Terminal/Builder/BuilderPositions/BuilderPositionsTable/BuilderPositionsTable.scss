@@ -1,0 +1,228 @@
+@import '../../../../../style/vars.scss';
+
+
+.BuilderPositionsTable {
+	.Table {
+		border-top-left-radius: 0;
+		
+		&__desktop {
+			overflow: auto;
+			
+			table {
+				min-width: 1240px;
+				padding: 0 5px;
+			}
+			
+			thead {
+				border: none;
+			}
+			
+			tr {
+				border: none;
+	
+				td {
+					padding-top: 12px;
+					padding-bottom: 12px;
+				}
+			}
+	
+			.Table__item, thead {
+				position: relative;
+				
+				&::after {
+					content: '';
+					position: absolute;
+					display: block;
+					left: 15px;
+					right: 15px;
+					height: 1px;
+					background-color: $border-color;
+				}
+	
+				&:first-child {
+					&:not(thead)::after {
+						display: none;
+					}
+				}
+			}
+
+
+			.BuilderPositionsTable__strike-msg .muted {
+				transition: color .2s ease;
+			}
+
+			.Table__item.expandable {
+				transition: background-color .2s ease;
+				
+				&:active {
+					background-color: $blue-4;
+					
+					.BuilderPositionsTable__strike-msg .muted {
+						transition-duration: 0.1s;
+						color: $white;
+					}
+				}
+				
+				@media (hover: hover) and (pointer: fine) {
+					&:hover, &:focus-visible {
+						background-color: $blue-4;
+						
+						.BuilderPositionsTable__strike-msg .muted {
+							color: $white;
+						}
+					}
+
+					&:active {
+						.BuilderPositionsTable__strike-msg .muted {
+							color: $lgrey;
+						}
+					}
+				}
+
+				&.expanded {
+					background-color: $blue-4;
+
+					& + .Table__child-item.expanded {
+						&::after {
+							content: '';
+							position: absolute;
+							top: 0;
+							left: 15px;
+							right: 15px;
+							height: 1px;
+							background-color: $border-dimmed-color;
+						}
+					}
+					
+					& ~ .Table__child-item.expanded {
+						background-color: $blue-4;
+					}
+				}
+			}
+
+			tbody {
+				tr:last-child {
+					background-color: $blue-4;
+					
+					td, td span:not(.muted, .negative, .positive) {
+						color: $white!important;
+					}
+	
+					&::after {
+						left: 0;
+						right: 0;
+					}
+				}
+			}
+		}
+	}
+
+	&__header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		column-gap: 20px;
+		row-gap: 10px;
+		white-space: nowrap;
+
+		.Links {
+			border-bottom: none;
+			margin-bottom: 0;
+		}
+	}
+
+	&__message {
+		padding: 15px;
+		margin: 0;
+	}
+
+	.Table__mobile {
+		.icon-dropdown {
+			display: none;
+		}
+
+		.Table__item {
+			&:last-child {
+				position: relative;
+				margin-top: 30px;
+				
+				&::before {
+					content: '';
+					position: absolute;
+					top: -23px;
+					left: 0;
+					display: block;
+					width: 100%;
+					height: 1px;
+					background-color: $border-color;
+				}
+				
+				.info-row {
+					&__value {
+						color: $white;
+					}
+
+					&.pnl {
+						span {
+							color: $white!important;
+						}
+					}
+					
+					&.strategy {
+						.info-row {
+							&__title {
+								display: none;
+							}
+	
+							&__value {
+								span {
+									color: $white;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		.info-row {
+			&.closeBtn {
+				column-gap: 0;
+				.info-row__value {
+					width: 100%;
+					height: 30.9px;
+					
+					.BuilderPositionCloseBtn, .Spinner {
+						height: 100%;
+					}
+				}
+				
+				button {
+					padding: 6px 10px;
+				}
+			}
+
+			&.collateral {
+				align-items: flex-start;
+				
+				.info-row__value {
+					& > div {
+						align-items: flex-end;
+					}
+				}
+			}
+		}
+	}
+
+	@media (max-width: 768px) {
+		&__header {
+			flex-direction: column-reverse;
+			align-items: flex-start;
+			white-space: normal;
+
+			.Links__item {
+				padding-bottom: 8px;
+			}
+		}
+	}
+}

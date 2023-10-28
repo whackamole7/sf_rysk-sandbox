@@ -1,0 +1,26 @@
+@import '../../../../../../../style/vars.scss';
+
+
+.BuilderSwap {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	column-gap: 20px;
+	row-gap: 20px;
+	flex-wrap: wrap;
+	background-color: $blue-5;
+	border-top: $border;
+	padding: 25px 20px;
+
+	.BuilderCalculations__items {
+		row-gap: 5px;
+	}
+
+	@media (max-width: 576px) {
+		padding-top: 15px;
+
+		.BuilderCalculations__items {
+			row-gap: 8px;
+		}
+	}
+}

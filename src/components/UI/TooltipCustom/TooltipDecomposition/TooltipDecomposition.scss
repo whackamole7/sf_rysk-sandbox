@@ -1,0 +1,20 @@
+@import '../../../../style/vars.scss';
+
+
+.TooltipDecomposition {
+	&__item {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		column-gap: 40px;
+		color: $white;
+
+		.Currency {
+			font-size: 13px;
+		}
+	}
+
+	.Divider {
+		margin: 7px 0 9px;
+	}
+}

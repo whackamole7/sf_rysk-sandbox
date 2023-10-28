@@ -1,0 +1,108 @@
+@import '../../../../../../../../style/vars.scss';
+
+
+.StrikeChooser {
+	position: relative;
+	min-height: 42px;
+	border: $border;
+	border-radius: 5px;
+	background-color: $blue-4;
+
+	&__items {
+		position: relative;
+		height: 100%;
+		background-color: $blue-4;
+		z-index: 2;
+		padding: 4.5px;
+	}
+
+	&__item {
+		position: relative;
+		font-size: 14px;
+		color: $lgrey;
+		transform: translateY(1px);
+		padding: 5px;
+
+		&:active:enabled {
+			color: $lgrey;
+		}
+
+		&:hover, &:focus-visible {
+			border-color: $border-color!important;
+			color: $white;
+		}
+		
+		span {
+			z-index: 2;
+		}
+
+		&_ITM, &.StrikeCurrentPriceItem {
+			position: relative;
+			&::after {
+				content: '';
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				z-index: 1;
+				display: block;
+				border-radius: 4px;
+				background-color: $green;
+				opacity: 0.1;
+			}
+		}
+
+		&.open {
+			color: $cornflower;
+		}
+		&.chosen {
+			color: $white;
+			border-color: $cornflower;
+
+			&:active:enabled {
+				color: $white;
+			}
+
+			&:hover, &:focus-visible {
+				border-color: $cornflower!important;
+			}
+		}
+
+		&-market {
+			position: absolute;
+			z-index: 10;
+			left: -7px;
+			top: -9px;
+			transition: opacity .2s ease;
+		}
+
+		.swiper-slide-active &-market {
+			opacity: 0;
+		}
+
+		swiper-slide:first-child &-market {
+			opacity: 1;
+			left: -1px;
+		}
+	}
+
+	@media (max-width: 768px) {
+		&__item {
+			&-market {
+				left: -1px;
+			}
+		}
+	}
+	
+	@media (max-width: 480px) {
+		&__item {
+			font-size: 12px;
+
+			&-market {
+				width: 15px;
+				top: -6px;
+			}
+		}
+	}
+}

@@ -1,0 +1,45 @@
+@import '../../../style/vars.scss';
+
+.TokenPricesPanel {
+	width: 100%;
+	display: inline-flex;
+	align-items: center;
+	background-color: $blue-4;
+	border-radius: 5px;
+	border: $border;
+	margin-bottom: 30px;
+	
+	&__icon {
+		line-height: 0;
+		background-color: $blue-1;
+		border-right: $border;
+		border-radius: 5px 0 0 5px;
+		padding: 15px 10px;
+	}
+
+	&__items {
+		display: flex;
+		align-items: center;
+		column-gap: 15px;
+		padding: 10px 13px;
+	}
+
+	&__item {
+		display: flex;
+		column-gap: 15px;
+
+		&:not(:last-child)::after {
+			content: '';
+			width: 1px;
+			border-left: $border;
+		}
+	}
+
+	@media (max-width: 480px) {
+		margin-bottom: 20px;
+	}
+
+	@media (max-width: 380px) {
+		justify-content: space-between;
+	}
+}

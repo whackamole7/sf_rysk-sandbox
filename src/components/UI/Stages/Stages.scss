@@ -1,0 +1,53 @@
+@import '../../../style/vars.scss';
+
+
+.Stages {
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	column-gap: 30px;
+	margin-bottom: 15px;
+
+	&::after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		z-index: 0;
+		display: block;
+		height: 1px;
+		background-color: $blue-2;
+	}
+
+	&__item {
+		position: relative;
+		z-index: 1;
+		color: $grey;
+		border-bottom: 1px solid transparent;
+		cursor: default;
+		white-space: nowrap;
+		padding-bottom: 10px;
+		transition: all .2s ease;
+
+		&.active {
+			color: $white;
+			border-color: $cornflower;
+		}
+		
+		margin: 0 auto;
+
+		&:first-child {
+			margin-left: 0;
+		}
+		&:last-child {
+			margin-right: 0;
+		}
+	}
+
+	@media (max-width: 480px) {
+		&__item {
+			font-size: 13px;
+		}
+	}
+}

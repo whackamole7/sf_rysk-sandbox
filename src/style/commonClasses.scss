@@ -1,0 +1,82 @@
+
+
+._container {
+	max-width: $container-width;
+	margin: 0 auto;
+
+	@media (max-width: calc($container-width + 40px)) {
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+}
+
+.text-inline {
+	color: $lgrey;
+	a {
+		color: $cornflower;	
+		&:visited {
+			color: $cornflower;
+		}
+	}
+	p {
+		margin-top: 0.6em;
+		margin-bottom: 0.6em;
+	}
+}
+
+.App-box {
+	background-color: $blue-5;
+	border: $border;
+	border-radius: 5px;
+	padding: 25px 30px;
+	margin: 30px 0;
+
+	@media (max-width: 480px) {
+		padding: 15px 20px;
+		margin: 20px 0;
+	}
+}
+
+
+.tip {
+	cursor: default;
+	border-bottom: 1px dashed $grey;
+
+	&.negative {
+		border-bottom-color: $red;
+	}
+}
+
+.info-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	column-gap: 15px;
+	margin: 7px 0;
+	
+	&__title {
+		color: $grey;
+	}
+
+	&__value {
+		color: $lgrey;
+	}
+
+	@media (max-width: 480px) {
+		font-size: 14px;
+	}
+}
+
+.positive {
+	color: $green;
+}
+.negative {
+	color: $red;
+}
+.muted {
+	color: $grey;
+
+	&_light {
+		color: $lgrey;
+	}
+}

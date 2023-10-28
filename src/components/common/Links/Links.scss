@@ -1,0 +1,60 @@
+@import '../../../style/vars.scss';
+
+.Links {
+	width: 100%;
+	display: flex;
+	column-gap: 30px;
+	font-size: 17px;
+
+	&__item {
+		color: $white;
+		padding: 0;
+		border: none;
+		
+		transition: all .2s ease;
+		&:not([disabled]):not(.active):hover, &:focus-visible {
+			color: $lgrey;
+		}
+		&.active {
+			color: $cornflower;
+		}
+		&[disabled] {
+			cursor: not-allowed;
+			color: $grey;
+		}
+	}
+
+	@media (max-width: 768px) {
+		font-size: 15px;
+	}
+
+	@media (max-width: 480px) {
+		font-size: 14px;
+	}
+}
+
+// Types
+.Links {
+	&_border {
+		border-bottom: $border;
+
+		.Links__item {
+			color: $grey;
+			border-bottom: 1px solid transparent;
+			padding-bottom: 10px;
+			transform: translateY(1px);
+
+			&:not([disabled]):hover, &:focus-visible {
+				color: $white;
+			}
+			&.active {
+				color: $white;
+				border-bottom-color: $cornflower;
+			}
+		}
+
+		@media (max-width: 480px) {
+			justify-content: space-between;
+		}
+	}
+}

@@ -1,0 +1,37 @@
+@import '../../../../../style/vars.scss';
+
+.NetworkSwitcher {
+	div.Selector__control {
+		background-color: $blue-2;
+
+		&--is-disabled {
+			cursor: default!important;
+		}
+		
+		&:hover:not(.Selector__control--is-disabled), &:focus-visible {
+			background-color: lighten($blue-2, 2);
+		}
+	}
+
+	.Selector__menu {
+		width: max-content;
+	}
+
+	div.Selector__indicators {
+		display: none;
+	}
+
+	@media (max-width: 480px) {
+		.Selector {
+			&__single-value span {
+				display: none;
+			}
+
+			&__menu {
+				right: 0;
+				left: auto;
+				width: max-content;
+			}
+		}
+	}
+}

@@ -1,0 +1,51 @@
+@import '../../../style/vars.scss';
+
+
+.Carousel {
+	width: 100%;
+
+	swiper-container {
+		width: 100%;
+	}
+
+	swiper-slide {
+		height: auto;
+	}
+
+	&__nav-btn {
+		position: absolute;
+		top: 50%;
+		z-index: 50;
+		transform: translateY(-50%);
+
+		&:disabled {
+			display: none;
+		}
+		
+		// Arrow icon
+		&::before {
+			content: '';
+			position: relative;
+			z-index: 11;
+			display: block;
+			flex-shrink: 0;
+			width: 20px;
+			height: 20px;
+			background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%0A%3Cg%20clip-path%3D%22url%28%23clip0_6239_18131%29%22%3E%0A%3Ccircle%20cx%3D%2210%22%20cy%3D%2210%22%20r%3D%2210%22%20fill%3D%22%2320224E%22%2F%3E%0A%3Ccircle%20cx%3D%2210%22%20cy%3D%2210%22%20r%3D%229.5%22%20stroke%3D%22url%28%23paint0_linear_6239_18131%29%22%20stroke-opacity%3D%220.7%22%2F%3E%0A%3Cpath%20d%3D%22M9.10211%204.80376L9.69669%204.19373C9.94844%203.93542%2010.3555%203.93542%2010.6046%204.19373L15.8112%209.53286C16.0629%209.79116%2016.0629%2010.2088%2015.8112%2010.4644L10.6046%2015.8063C10.3529%2016.0646%209.94577%2016.0646%209.69669%2015.8063L9.10211%2015.1962C8.84767%2014.9352%208.85303%2014.5093%209.11282%2014.2537L12.3401%2011.0992H4.64279C4.28658%2011.0992%204%2010.8051%204%2010.4397V9.56034C4%209.19487%204.28658%208.90085%204.64279%208.90085H12.3401L9.11282%205.74628C8.85035%205.49073%208.845%205.0648%209.10211%204.80376Z%22%20fill%3D%22%236988FF%22%2F%3E%0A%3C%2Fg%3E%0A%3Cdefs%3E%0A%3ClinearGradient%20id%3D%22paint0_linear_6239_18131%22%20x1%3D%22-4.63686e-08%22%20y1%3D%22-0.237624%22%20x2%3D%2216.5889%22%20y2%3D%2222.4898%22%20gradientUnits%3D%22userSpaceOnUse%22%3E%0A%3Cstop%20stop-color%3D%22%23384263%22%20stop-opacity%3D%220.25%22%2F%3E%0A%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23384263%22%20stop-opacity%3D%220.15%22%2F%3E%0A%3C%2FlinearGradient%3E%0A%3CclipPath%20id%3D%22clip0_6239_18131%22%3E%0A%3Crect%20width%3D%2220%22%20height%3D%2220%22%20fill%3D%22white%22%2F%3E%0A%3C%2FclipPath%3E%0A%3C%2Fdefs%3E%0A%3C%2Fsvg%3E');
+			background-repeat: no-repeat;
+		}
+
+		&_prev {
+			left: 0px;
+			padding-left: 4px;
+
+			&::before {
+				transform: rotate(180deg);
+			}
+		}
+		&_next {
+			right: 0;
+			padding-right: 4px;
+		}
+	}
+}

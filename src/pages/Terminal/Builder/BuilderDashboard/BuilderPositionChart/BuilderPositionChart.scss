@@ -1,0 +1,48 @@
+@import '../../../../../style/vars.scss';
+
+.BuilderPositionChart {
+	position: relative;
+	width: 100%;
+	padding-bottom: 55px;
+	padding: 0;
+
+	.react-tooltip {
+		position: relative;
+		top: 0;
+		left: 0;
+		padding: 7px 10px;
+
+		p, .Currency {
+			font-size: 15px;
+			margin-top: 5px;
+			margin-bottom: 0;	
+		}
+		
+		@media (max-width: 768px) {
+			padding: 7px;
+			p, .Currency {
+				font-size: 13px;
+			}
+			p {
+				margin-top: 3px;
+			}
+		}
+	}
+
+	&__tip {
+		position: absolute;
+		width: 100%;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -60%);
+		font-size: 15px;
+		line-height: 130%;
+		color: $lgrey;
+		text-align: center;
+		padding: 50px;
+
+		@media (max-width: 480px) {
+			font-size: 13px;
+		}
+	}
+}

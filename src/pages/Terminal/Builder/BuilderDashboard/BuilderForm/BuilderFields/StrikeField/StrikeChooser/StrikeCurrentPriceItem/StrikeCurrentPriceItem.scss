@@ -1,0 +1,41 @@
+@import '../../../../../../../../../style/vars.scss';
+
+
+.StrikeCurrentPriceItem {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	line-height: $line-height;
+	color: $white;
+	background-color: $blue-2;
+	border: $border;
+	border-radius: 5px;
+	cursor: default;
+	
+	&::before {
+		display: none;
+		content: '';
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		flex-shrink: 0;
+		width: 12px;
+		height: 48px;
+		background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2248%22%20viewBox%3D%220%200%2012%2048%22%20fill%3D%22none%22%3E%0A%3Cpath%20d%3D%22M6.75593%207.12713C6.35716%207.58759%205.64284%207.58759%205.24407%207.12713L2.23682%203.65465C1.67594%203.00701%202.136%202%202.99275%202L9.00725%202C9.864%202%2010.3241%203.00701%209.76318%203.65465L6.75593%207.12713Z%22%20fill%3D%22%236988FF%22%2F%3E%0A%3Cpath%20d%3D%22M5.24407%2040.8729C5.64284%2040.4124%206.35716%2040.4124%206.75593%2040.8729L9.76318%2044.3453C10.3241%2044.993%209.864%2046%209.00725%2046H2.99275C2.136%2046%201.67594%2044.993%202.23682%2044.3453L5.24407%2040.8729Z%22%20fill%3D%22%236988FF%22%2F%3E%0A%3C%2Fsvg%3E');
+		background-repeat: no-repeat;
+	}
+
+	&_first::before {
+		display: block;
+	}
+
+	@media (max-width: 768px) {
+		&::before {
+			// display: block;
+			width: 12px;
+			height: 34px;
+			background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2234%22%20viewBox%3D%220%200%2012%2034%22%20fill%3D%22none%22%3E%0A%3Cpath%20d%3D%22M6.39279%205.65982C6.16733%205.85508%205.83267%205.85508%205.60721%205.65982L2.02039%202.55355C1.60045%202.18987%201.85765%201.49999%202.41318%201.49999L9.58682%201.49999C10.1423%201.49999%2010.3996%202.18987%209.97961%202.55355L6.39279%205.65982Z%22%20fill%3D%22%236988FF%22%2F%3E%0A%3Cpath%20d%3D%22M5.60721%2028.3402C5.83267%2028.1449%206.16733%2028.1449%206.39279%2028.3402L9.97961%2031.4464C10.3996%2031.8101%2010.1423%2032.5%209.58682%2032.5H2.41318C1.85765%2032.5%201.60045%2031.8101%202.02039%2031.4464L5.60721%2028.3402Z%22%20fill%3D%22%236988FF%22%2F%3E%0A%3C%2Fsvg%3E');
+		}
+	}
+}

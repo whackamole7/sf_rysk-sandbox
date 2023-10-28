@@ -1,0 +1,55 @@
+@import '../../../../../../style/vars.scss';
+
+
+.BuyBuildModal {
+	width: 500px;
+	
+	&__strategy {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		column-gap: 15px;
+		color: $lgrey;
+		background-color: $blue-3;
+		border: $border;
+		border-radius: 5px;
+		padding: 14px 15px;
+
+		&-info {
+			display: flex;
+		}
+	}
+
+	&__hint {
+		background-color: $blue-helper;
+		border: $border;
+		border-radius: 5px;
+		padding: 10px 15px;
+		margin-top: 15px;
+	}
+
+	&__button {
+		margin-top: 15px;
+	}
+
+	&__slippage {
+		display: flex;
+		align-items: center;
+		column-gap: 3px;
+	}
+
+	@media (max-width: 576px) {
+		width: calc(100% - 40px);
+	}
+	
+	@media (max-width: 480px) {
+		&__strategy {
+			font-size: 14px;
+			padding: 10px;
+		}
+
+		&__hint {
+			padding: 8px 10px;
+		}
+	}
+}

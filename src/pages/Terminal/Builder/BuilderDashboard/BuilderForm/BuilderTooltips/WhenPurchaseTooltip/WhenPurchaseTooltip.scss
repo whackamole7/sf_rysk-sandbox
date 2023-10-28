@@ -1,0 +1,55 @@
+@import '../../../../../../../style/vars.scss';
+
+
+.WhenPurchaseTooltip {
+	width: 245px!important;
+
+	&__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		column-gap: 10px;
+		margin-bottom: 5px;
+	}
+
+	&__title {
+		flex-grow: 1;
+		font-size: 17px;
+		border-right: $border;
+		margin-bottom: 0;
+	}
+
+	&__outlooks {
+		font-size: 12px;
+	}
+
+	&__subtitle {
+		font-size: 15px;
+		margin-bottom: 3px;
+	}
+
+	&__stats {
+		display: flex;
+		column-gap: 5px;
+		align-items: center;
+		margin-top: 10px;
+
+		&-item {
+			display: flex;
+			font-size: 12px;
+			background-color: $blue-1;
+			border-radius: 3px;
+			border: $border;
+
+			&-name, &-value {
+				padding: 3px 7px;
+			}
+			&-name {
+				border-right: $border;
+			}
+			&-value {
+				color: $white;
+			}
+		}
+	}
+}

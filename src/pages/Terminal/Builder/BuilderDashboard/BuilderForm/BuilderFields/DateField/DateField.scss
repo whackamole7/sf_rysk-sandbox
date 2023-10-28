@@ -1,0 +1,62 @@
+@import '../../../../../../../style/vars.scss';
+
+
+.BuilderForm__field_date, .BuilderMobileContainer {
+	.BuilderForm__date {
+		&-period {
+			width: 45px;
+			text-align: center;
+			font-size: 10px;
+			background-color: $grey;
+			border-radius: 10px;
+		}
+	}
+
+	.Selector__option {
+		display: flex;
+		justify-content: space-between;
+		
+		&--is-focused:not(.Selector__option--is-selected) {
+			.BuilderForm__date {
+				&-period {
+					color: $white;
+					background-color: $cornflower;
+				}
+			}
+		}
+
+		&--is-selected {
+			.BuilderForm__date {
+				&-value {
+					order: 1;
+				}
+				
+				&-period {
+					color: $lgrey;
+					order: 3;
+				}
+			}
+
+			&::after {
+				order: 2;
+				margin-right: auto;
+			}
+		}
+
+		&:active {
+			.BuilderForm__date {
+				&-period {
+					color: $lgrey;
+					background-color: $grey;
+				}
+			}
+		}
+	}
+
+	.Selector__control {
+		.BuilderForm__date-period {
+			display: none;
+		}
+	}
+	
+}

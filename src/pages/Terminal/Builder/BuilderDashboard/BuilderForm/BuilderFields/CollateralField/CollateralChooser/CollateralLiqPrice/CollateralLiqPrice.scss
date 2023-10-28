@@ -1,0 +1,21 @@
+@import '../../../../../../../../../style/vars.scss';
+
+
+.CollateralLiqPrice {
+	position: absolute;
+	right: 0;
+	top: auto;
+	bottom: calc(100% + 5px);
+	font-size: 11px;
+	color: $lgrey;
+
+	&__val {
+		color: $white;
+		margin-left: 4px;
+	}
+
+	&_down {
+		top: calc(100% + 5px);
+		bottom: auto;
+	}
+}

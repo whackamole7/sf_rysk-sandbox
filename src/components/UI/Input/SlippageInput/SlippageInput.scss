@@ -1,0 +1,33 @@
+@import '../../../../style/vars.scss';
+
+
+.SlippageInput {
+	display: flex;
+	column-gap: 3px;
+	align-items: center;
+	
+	input {
+		display: inline-block;
+		width: 75px;
+		text-align: right;
+		border: none;
+	}
+
+	&__btn {
+		margin-bottom: 2px;
+	}
+
+	&__input-container {
+		border-bottom: 1px solid transparent;
+		padding-bottom: 1px;
+		&.focused {
+			border-bottom-color: $border-color;
+		}
+
+		margin-bottom: -3px;
+	}
+
+	&__unit {
+		color: $white;
+	}
+}

@@ -1,0 +1,72 @@
+@import '../../../../../../../../../style/vars.scss';
+
+.StrikeInfoBox {
+	display: none;
+	position: absolute;
+	z-index: 0;
+	left: -1px;
+	right: -1px;
+	top: calc(100% - 3px);
+	background-color: $blue-4;
+	border-radius: 0 0 5px 5px;
+	border: $border;
+	border-top: none;
+	box-shadow: $shadow;
+	overflow: auto;
+	padding-top: 3px;
+	
+	&.open {
+		display: block;
+	}
+
+	.Table {
+		&__desktop {
+			min-width: 535px;
+			font-size: 14px;
+			background-color: transparent;
+			border: none;
+			border-radius: 0;
+		}
+
+		th {
+			padding: 8px;
+		}
+		
+		.StrikeBrief {
+			font-size: 15px;
+		}
+	}
+
+
+	&__strike-option {
+		position: relative;
+
+		transition: background-color .2s ease;
+		&:hover:not(.disabled), &:focus-visible {
+			background-color: $blue-2;
+		}
+		
+		&:active:not(.disabled) {
+			transition-duration: 0.1s;
+			background-color: darken($blue-2, 2);
+		}
+
+		&-overlay-btn {
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			z-index: 1;
+
+			border-left: 2px solid transparent;
+			transition: border-color .4s ease;
+		}
+		&.chosen &-overlay-btn {
+			border-left-color: $cornflower;
+		}
+		&.chosen {
+			background-color: $blue-2;
+		}
+	}
+}

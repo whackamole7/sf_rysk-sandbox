@@ -1,0 +1,65 @@
+@import '../../../style/vars.scss';
+
+
+.szh-accordion {
+	&__item {
+		&-btn {
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			column-gap: 20px;
+			align-items: center;
+			font-size: 17px;
+			
+			@media (max-width: 576px) {
+				font-size: 15px;
+			}
+			@media (max-width: 480px) {
+				font-size: 14px;
+			}
+
+			&::after {
+				content: '';
+				display: block;
+				flex-shrink: 0;
+				width: 25px;
+				height: 25px;
+				background-image: url('../../../img/UI/arrow_circled.svg');
+				background-repeat: no-repeat;
+				transition: transform .2s ease;
+			}
+
+			transition: color .2s ease;
+			&:focus-visible {
+				outline: none;
+				color: $white;
+			}
+
+			&:active {
+				transition-duration: 0.05s;
+				color: $white;
+			}
+		}
+
+		&--expanded &-btn {
+			&::after {
+				transform: rotate(180deg);
+			}
+		}
+
+		// Animation
+		&-content {
+			transition: height .25s ease;
+		}
+	}
+}
+
+.Accordion_strategy {
+	.szh-accordion {
+		&__item {
+			display: flex;
+			flex-direction: column-reverse;
+			padding-top: 0;
+		}
+	}
+}

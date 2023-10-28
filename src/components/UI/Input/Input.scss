@@ -1,0 +1,13 @@
+@import '../../../style/vars.scss';
+
+.Input {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	column-gap: 5px;
+
+	&__unit {
+		color: $grey;
+		white-space: nowrap;
+	}
+}

@@ -1,0 +1,24 @@
+@import '/src/style/vars.scss';
+
+
+.SwapSlippageField {
+	column-gap: 5px;
+	margin: 0;
+	margin-left: auto;
+
+	.info-row__title {
+		color: $lgrey;
+		font-size: 15px;
+
+		@media (max-width: 340px) {
+			font-size: 13px;
+		}
+	}
+
+	@media (max-width: 768px) {
+		width: 100%;
+		min-width: auto;
+		margin-left: 0;
+		margin-top: 10px;
+	}
+}

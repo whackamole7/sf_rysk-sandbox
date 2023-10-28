@@ -1,0 +1,118 @@
+@import '../../../../../style/vars.scss';
+
+.Wallet {
+	position: relative;
+	z-index: 900;
+
+	&.open &__body {
+		display: block;
+	}
+
+	&__header {
+		position: relative;
+		z-index: 2;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		cursor: pointer;
+		padding: 11.5px 13px;
+	}
+	&__header:hover &__address, &__header:focus-visible &__address {
+		color: $white;
+	}
+	&__header:focus-visible {
+    outline: $focus-outline;
+	}
+	&__body {
+		display: none;
+		position: absolute;
+		left: 0;
+		right: 0;
+		z-index: 1;
+		box-shadow: 3px 0px 20px 10px rgba(6, 13, 33, 0.5);
+		transform: translateY(10px);
+		padding: 15px 20px 22px;
+
+		.close-btn {
+			position: absolute;
+			right: 20px;
+			top: 15px;
+
+			&:focus-visible {
+				outline: $focus-outline;
+			}
+		}
+	}
+	&__header, &__body {
+		background-color: $blue-2;
+		border: $border;
+		border-radius: 5px;
+	}
+
+	&__address {
+		display: flex;
+		align-items: center;
+		column-gap: 7px;
+		font-size: 15px;
+		line-height: 1;
+		color: $lgrey;
+		transition: color .2s ease;
+	}
+
+	&__inner-address {
+		display: none;
+		font-size: 14px;
+		color: $lgrey;
+		margin-bottom: 7px;
+		margin-top: -3px;
+	}
+	
+	&__link {
+		display: inline-flex;
+		align-items: center;
+		column-gap: 10px;
+		font-size: 17px;
+		color: $lgrey;
+		transition: color .2s ease;
+
+		&:hover, &:focus-visible {
+			color: $white;
+		}
+	}
+
+	&__button {
+		width: 100%;
+		margin-top: 13px;
+	}
+
+	@media (max-width: 768px) {
+		&__body {
+			left: auto;
+			width: 280px;
+		}
+
+		&__address > span {
+			display: none;
+		}
+
+		&__inner-address {
+			display: block;
+		}
+	}
+	@media (max-width: 480px) {
+		position: static;
+		&__body {
+			left: 20px;
+			right: 20px;
+			width: auto;
+		}
+		&__button {
+			padding-top: 9.5px;
+			padding-bottom: 9.5px;
+		}
+		&__address {
+			font-size: 13px;
+		}
+	}
+}

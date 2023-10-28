@@ -1,0 +1,56 @@
+@import '../../../../../../../style/vars.scss';
+
+
+.BuilderMobileContainer {
+	grid-column: 1/3;
+
+	&__item {
+		&-title {
+			color: $lgrey;
+			margin-bottom: 8px;
+		}
+		
+		&-strike {
+			.StrikeChooser {
+				&__items {
+					padding: 6px;
+				}
+		
+				&__item {
+					transform: none;
+				}
+			}
+		}
+
+		&-collateral {
+			margin: 12px 0 35px;
+			
+			.CollateralChooser {
+				max-width: none;
+
+				.CollateralLiqPrice {
+					top: auto;
+					bottom: calc(100% + 5px);
+				}
+			}
+		}
+	}
+
+	.Divider {
+		margin: 20px 0 5px;
+	}
+
+	@media (max-width: 480px) {
+		&__item {
+			&-collateral {
+				.CollateralChooser {
+					max-width: none;
+				}
+			}
+		}
+		
+		.Divider {
+			margin-top: 15px;
+		}
+	}
+}

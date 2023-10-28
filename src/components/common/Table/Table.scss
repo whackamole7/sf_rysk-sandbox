@@ -1,0 +1,136 @@
+@import '../../../style/vars.scss';
+
+
+.Table {
+	&__desktop {
+		background-color: $blue-5;
+		border: $border;
+		border-radius: 5px;
+		white-space: nowrap;
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+		}
+	
+		thead {
+			border-bottom: $border;
+		}
+	
+		th {
+			font-size: 14px;
+			font-weight: 500;
+			color: $grey;
+			text-align: left;
+			padding: 15px 8px;
+	
+			&:first-child {
+				padding-left: 15px;
+			}
+			&:last-child {
+				padding-right: 15px;
+			}
+		}
+	
+		td {
+			color: $lgrey;
+			padding: 10px;
+	
+			&:first-child {
+				padding-left: 15px;
+			}
+			&:last-child {
+				padding-right: 15px;
+			}
+		}
+
+		tbody tr {
+			border-bottom: $border;
+
+			&:last-child {
+				border-bottom: none;
+			}
+		}
+
+		.Table__item {
+			&.expandable {
+				cursor: pointer;
+	
+				.icon-dropdown {
+					transition: transform .2s ease;
+				}
+				
+				&.expanded .icon-dropdown {
+					transform: rotate(180deg);
+				}
+			}
+		}
+		
+		.Table__child-item {
+			position: absolute;
+			z-index: -1;
+			opacity: 0;
+			transform: translateY(-15px);
+	
+			transition: transform .25s ease;
+	
+	
+			// todo: beautify overflowing fix
+			td {
+				display: block;
+				height: 0;
+				padding: 0!important;
+			}
+	
+			&.expanded {
+				position: static;
+				z-index: 1;
+				opacity: 1;
+				transform: translateY(0);
+	
+				td {
+					display: table-cell;
+					height: auto;
+					padding: 12px 10px!important;
+				}
+			}
+		}
+	}
+
+	@media (max-width: 576px) {
+		background-color: transparent;
+		border: none;
+		padding: 0;
+
+		&__mobile {
+			display: flex;
+			flex-direction: column;
+			row-gap: 15px;
+
+			.Table__item, .Table__child-item {
+				padding: 15px 20px;
+				margin: 0;
+			}
+
+			.Table__child-item {
+				padding: 0;
+			}
+
+			.Accordion {
+				.szh-accordion__item {
+					// todo: fix
+					// display: flex;
+					// flex-direction: column-reverse;
+					
+					&-content {
+						transition: height 0.5s ease;
+					}
+
+					&-btn {
+						font-size: 15px;
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,13 @@
+
+
+.UnsupportedChainErrorModal {
+	&__text {
+		margin-bottom: 10px;
+	}
+
+	&__switch-btns {
+		display: flex;
+		flex-direction: column;
+		row-gap: 7px;
+	}
+}

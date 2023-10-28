@@ -1,0 +1,35 @@
+@import '../../../style/vars.scss';
+
+div.react-tooltip {
+	z-index: 999;
+	font-size: 13px;
+	line-height: $line-height;
+	color: $lgrey;
+	background-color: $blue-3;
+	border: $border;	
+	border-radius: 5px;
+	opacity: 1;
+	box-shadow: $shadow;
+	padding: 9px 12px;
+
+	&-arrow {
+		top: -5.5px!important;
+		width: 11px;
+		height: 11px;
+		border: $border;
+		border-radius: 2px;
+		transform: translateY(0px) rotate(225deg) skew(7deg, 7deg)!important;
+
+		&::before {
+			content: '';
+			position: absolute;
+			top: -1px;
+			bottom: 0;
+			left: -1px;
+			right: 0;
+			z-index: 1;
+			display: block;
+			background-color: $blue-3;
+		}
+	}
+}

@@ -1,0 +1,123 @@
+@import './vars.scss';
+@import './tailwind.css';
+@import './fonts.scss';
+
+
+* {
+	box-sizing: border-box;
+}
+html {
+	font-size: 4px;
+}
+
+body {
+	font-family: $common-font;
+	font-size: 15px;
+	font-weight: 500;
+	line-height: $line-height;
+	color: $white;
+	background-color: $bg;
+	margin: 0;
+	padding-bottom: 40px;
+
+	&._scroll-lock {
+		height: 100%;
+		overflow: hidden;
+		padding-right: 5px;
+		@media (max-width: 1025px) {
+			padding-right: 0;
+		}
+		.warning {
+			padding-right: 25px;
+			@media (max-width: 1025px) {
+				padding-right: 20px;
+			}
+		}
+	}
+}
+
+#root {
+	min-height: calc(100vh + 1px);
+	display: flex;
+	flex-direction: column;
+
+	& > ._container {
+		width: 100%;
+	}
+
+	main {
+		margin-bottom: 90px;
+	}
+}
+
+*[disabled] {
+	cursor: not-allowed;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	line-height: $line-height;
+	color: $white;
+	margin-top: 0;
+}
+h1 {
+	font-size: 25px;
+	font-family: $title-font;
+	font-weight: 400;
+	margin-bottom: 15px;
+}
+h2 {
+	font-size: 20px;
+	font-weight: 500;
+	margin-bottom: 8px;
+}
+h6 {
+	font-size: inherit;
+	font-weight: 500;
+	color: $white;
+	margin-bottom: 0;
+}
+
+p {
+	color: $lgrey;
+	line-height: $line-height;
+}
+
+button {
+	color: $lgrey;
+}
+
+input {
+	color: $white;
+	outline: none;
+	background: none;
+	// fix bluring elements on focus
+	border: 2px solid transparent;
+
+	&::placeholder {
+		color: $grey;
+	}
+}
+
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 3px;
+}
+::-webkit-scrollbar-track {
+  background: $dgrey;
+}
+::-webkit-scrollbar-thumb {
+  background: $lgrey;
+  border-radius: 1.5rem;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+	background-color: $cornflower;
+}
+
+* {
+	-webkit-tap-highlight-color:  transparent; 
+}
+
+@import './commonClasses.scss';
+@import './libs/Slider.scss';

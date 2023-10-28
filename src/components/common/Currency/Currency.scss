@@ -1,0 +1,23 @@
+@import '../../../style/vars.scss';
+
+.Currency {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  column-gap: 5px;
+  color: $lgrey;
+	line-height: 0;
+
+  &.hlight {
+    color: $white;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+
+    img {
+      width: 15px;
+      height: 15px;
+    }
+  }
+}

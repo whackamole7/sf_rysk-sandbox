@@ -1,0 +1,13 @@
+@import '../../../style/vars.scss';
+
+.Logo {
+	flex-shrink: 0;
+
+	img {
+		width: 100%;
+	}
+
+	@media (max-width: 480px) {
+		width: 120px;
+	}
+}

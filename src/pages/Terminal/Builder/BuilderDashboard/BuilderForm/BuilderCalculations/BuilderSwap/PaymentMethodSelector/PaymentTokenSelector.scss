@@ -1,0 +1,61 @@
+@import '../../../../../../../../style/vars.scss';
+
+
+.PaymentTokenSelector {
+	.Selector {
+		&__control {
+			.PaymentTokenSelector__item-value {
+				display: none;
+			}
+		}
+
+		&__single-value {
+			height: 100%;
+		}
+		
+		&__group {
+			padding: 0;
+		}
+		
+		&__menu {
+			width: 245px;
+			right: 0;
+			left: auto;
+			background-color: $blue-4;
+		}
+
+		&__option {
+			border-bottom: $border;
+			&:last-child {
+				border-bottom: none;
+			}
+			
+			&--is-focused {
+				background-color: $blue-2;
+				color: $white;
+			}
+
+			&--is-selected {
+				background-color: $blue-5!important;
+				color: $lgrey;
+			}
+
+			&:active {
+				background-color: $blue-2;
+			}
+
+			&::after {
+				display: none;
+			}
+		}
+	}
+
+	&__item {
+		height: 100%;
+		display: flex;
+		column-gap: 10px;
+		align-items: center;
+		justify-content: space-between;
+		flex-grow: 1;
+	}
+}

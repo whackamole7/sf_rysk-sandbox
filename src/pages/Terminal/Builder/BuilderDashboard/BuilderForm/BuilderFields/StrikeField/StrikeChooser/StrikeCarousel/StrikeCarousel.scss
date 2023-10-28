@@ -1,0 +1,49 @@
+
+
+
+.StrikeCarousel {
+	&__slide {
+		&_ETH {
+			width: 59.2px;
+		}
+
+		&_BTC {
+			width: 70px;
+		}
+	}
+	
+	.Carousel {
+		&__nav-btn {
+			// Fading gradient
+			&::after {
+				content: '';
+				position: absolute;
+				top: -9px;
+				bottom: -10px;
+				right: 0px;
+				width: 80px;
+				z-index: 10;
+				display: block;
+				background: linear-gradient(90deg, transparent 0, rgba(19, 21, 49, 0.45) 20%, rgba(19, 21, 49, 1) 100%);
+				border-radius: 5px;
+			}
+
+			&_prev {
+				&::after {
+					right: auto;
+					left: 0;
+					background: linear-gradient(-90deg, transparent 0, rgba(19, 21, 49, 0.45) 20%, rgba(19, 21, 49, 1) 100%);
+				}
+			}
+		}
+
+		@media (max-width: 480px) {
+			&__nav-btn {
+				&::after {
+					top: -26px;
+					bottom: -26px;
+				}
+			}
+		}
+	}
+}

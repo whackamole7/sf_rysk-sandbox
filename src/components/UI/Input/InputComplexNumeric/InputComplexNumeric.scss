@@ -1,0 +1,70 @@
+@import "../../../../style/vars.scss";
+
+.InputComplexNumeric {
+	font-size: 13px;
+	background-color: $blue-4;
+
+	&__header, &__body {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	&__header {
+		margin-bottom: 8px;
+	}
+
+	&__title {
+		font-weight: 400;
+		color: $lgrey;
+	}
+
+	&__presented-value {
+		display: flex;
+		column-gap: 0.15em;
+
+		&-title {
+			color: $grey;
+		}
+
+		transition: color .2s ease;
+		&:hover, &:focus-visible {
+			color: $white;
+		}
+		&:active {
+			transition: none;
+			color: $cornflower;
+		}
+	}
+
+	&__helper {
+		display: flex;
+		column-gap: 12px;
+		align-items: center;
+		line-height: 0;
+	}
+
+	&__max-btn {
+		background-color: $blue-2;
+		border-radius: 3px;
+		border: $border;
+		padding: 10px;
+
+		transition: border-color .2s ease, color .2s ease;
+		&:hover, &:focus-visible {
+			color: $white;
+		}
+		&:active {
+			transition: none;
+			border-color: $cornflower;
+		}
+	}
+
+	&__unit {
+		font-family: $title-font;
+		font-weight: 400;
+	}
+
+	input {
+		font-size: 15px;
+	}
+}

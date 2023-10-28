@@ -1,0 +1,26 @@
+@import '../../../../style/vars.scss';
+
+
+.SelectorInline {
+	.Selector {
+		&__control {
+			min-height: auto;
+			column-gap: 5px;
+			background-color: transparent;
+			border: none;
+			padding: 0;
+
+			&:hover:not(.Selector__control--is-disabled), &:focus-visible {
+				background-color: transparent;
+
+				.Selector__single-value .Currency {
+					color: $cornflower;
+				}
+			}
+		}
+
+		&__single-value .Currency {
+			transition: color .2s ease;
+		}
+	}
+}

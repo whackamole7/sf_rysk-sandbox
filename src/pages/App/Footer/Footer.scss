@@ -1,0 +1,76 @@
+@import '../../../style/vars.scss';
+
+
+.Footer {
+	margin-top: auto;
+
+	&__content {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		column-gap: 20px;
+		border-top: $border;
+		padding-top: 30px;
+		padding-bottom: 60px;
+	}
+
+	&__smedia-items {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 10px;
+	}
+	&__smedia-item {
+		display: inline-block;
+		line-height: 0;
+		img {
+			border-radius: 5px;
+			border: 1px solid transparent;
+			transition: all .2s ease;
+		}
+
+		&:hover, &:focus-visible {
+			img {
+				border-color: $cornflower;
+			}
+		}
+
+		&:active {
+			img {
+				transition-duration: 0.1s;
+				border-color: $white-dimmed;
+			}
+		}
+	}
+
+	@media (max-width: 992px) {
+		&__content {
+			padding-bottom: 30px;
+		}
+	}
+	
+	@media (max-width: 576px) {
+		&__content {
+			padding-top: 20px;
+			padding-bottom: 20px;
+		}
+
+		&__smedia-item {
+			img {
+				width: 25px;
+				height: 25px;
+			}
+
+			&s {
+				gap: 8px;
+			}
+		}
+	}
+
+	@media (max-width: 480px) {
+		&__content {
+			flex-direction: column;
+			row-gap: 15px;
+		}
+	}
+}
