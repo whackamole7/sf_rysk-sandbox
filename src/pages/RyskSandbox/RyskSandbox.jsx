@@ -1,5 +1,4 @@
 import { useChainId } from 'wagmi';
-import useTokenPrices from '../../hooks/networkHooks/tokenHooks/tokenPrices/useTokenPrices';
 import './RyskSandbox.scss';
 import useGodEye from '../../environment/contextHooks/useGodEye/useGodEye';
 import { DEFAULT_DECIMALS } from '../../environment/constants/tokensConstants';
@@ -11,6 +10,7 @@ import { swapFromUSDC, swapToUSDC } from '../../network/helpers/Swapper';
 import { getAlchemyProvider, getSigner } from '../../network/providers';
 import { BigNumber, ethers } from 'ethers';
 import { getContractAbi, getContractAddress, getContractData } from '../../network/contracts/contractsData';
+import useTokenPrices from '../../environment/contextHooks/useTokenPrices/useTokenPrices';
 
 
 const RyskSandbox = () => {

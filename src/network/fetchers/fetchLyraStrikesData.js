@@ -13,7 +13,7 @@ import { getTokenAmountFromDefaultDecimals } from './../../utils/tokenUtils';
 
 
 const PREFIX = "Lyra_";
-const TOKEN_SYMBOL = "USDC.e";
+const MARKET_TOKEN_SYMBOL = "USDC.e";
 
 const ACCEPTABLE_DISABLED_REASONS = [
 	"NotEnoughCollateral",
@@ -96,7 +96,7 @@ const getStrikeUtils = (
 		isBuy
 	} = strikeParams;
 
-	const TOKEN = getTokenBySymbol(chainId, TOKEN_SYMBOL);
+	const MARKET_TOKEN = getTokenBySymbol(chainId, MARKET_TOKEN_SYMBOL);
 	
 	const getTrade = (amountBigInt, options) => {
 		const amountBigNum = BigNumber.from(amountBigInt);
@@ -129,12 +129,12 @@ const getStrikeUtils = (
 			}
 
 			return (
-				swapToUSDC(chainId, TOKEN.address, premiumWithSlippage)
+				swapToUSDC(chainId, MARKET_TOKEN.address, premiumWithSlippage)
 					.then(premiumInUSDC => {
 						const premiumData = {
 							inUSDC: premiumInUSDC,
 							inMarketToken: premiumWithSlippage,
-							marketToken: TOKEN,
+							marketToken: MARKET_TOKEN,
 						};
 						
 						return shouldOmitGreeks
@@ -313,12 +313,17 @@ const filterSufficientStrikesData = (strikesData) => {
 }
 
 
-export const fetchLyraStrikesData = async (
+const fetchLyraStrikesData = async (
 	chainId,
 	lyraMarket,
 	strikeParams,
 	account
 ) => {
+
+	if (!lyraMarket) {
+		return {};
+	}
+	
 	const {
 		asset,
 		expiry,
@@ -348,3 +353,6 @@ export const fetchLyraStrikesData = async (
 	
 	return strikesData;
 }
+
+
+export default fetchLyraStrikesData;

@@ -1,6 +1,8 @@
 import React from 'react';
-import { formatBigInt, formatBigIntFree } from '../../../../../../../../../utils/dataTypesUtils/bigIntUtils';
+import { formatTokenAmount, numberFromBigInt } from '../../../../../../../../../utils/dataTypesUtils/bigIntUtils';
 import './CollateralRangeBtns.scss';
+import { roundNumber, separateThousands } from '../../../../../../../../../utils/dataTypesUtils/numberUtils';
+import { INPUT_MAX_DECIMALS } from '../../../../../../../../../environment/constants/tokensConstants';
 
 const CollateralRangeBtns = ({
 	min,
@@ -14,8 +16,13 @@ const CollateralRangeBtns = ({
 		<div className="CollateralRangeBtns">
 			{[min, max].map((value, i) => {
 				const isBase = collateralData.isBase;
-				const formatFn = isBase ? formatBigIntFree : formatBigInt;
-				const formattedValue = formatFn(value, isBase ? 3 : 0);
+				const formattedValue = separateThousands(
+					roundNumber(numberFromBigInt(value), INPUT_MAX_DECIMALS)
+				);
+				const displayValue = formatTokenAmount(
+					value,
+					collateralData.marketToken.isStable
+				)
 				const isFirstBtn = i === 0;
 				
 				return (
@@ -24,7 +31,7 @@ const CollateralRangeBtns = ({
 							key={i}
 							onClick={() => handleClick(formattedValue)}
 						>
-							{!isBase ? "$" : ""}{formattedValue}
+							{!isBase ? "$" : ""}{displayValue}
 						</button>
 						{isFirstBtn ? "—" : ""}
 					</React.Fragment>

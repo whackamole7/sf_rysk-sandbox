@@ -57,6 +57,7 @@ export const getIsTokenApproved = async (
 		amountBigIntDefaultDecimals,
 		token.decimals
 	);
+
 	
 	const allowance = await tokenContract.allowance(owner, spender);
 	return allowance.toBigInt() >= amountBigInt;
@@ -94,4 +95,12 @@ export const getNumberFromTokenAmount = (amountBigInt, tokenSymb) => {
 
 export const getIsWrapped = (tokenSymb) => {
 	return tokenSymb.startsWith("W");
+}
+
+
+export const getAreTokensDifferent = (firstToken, secondToken) => {
+	const isAddressesDifferent = firstToken.address !== secondToken.address;
+	const isEthDifferrent = firstToken.isETH !== secondToken.isETH;
+
+	return isAddressesDifferent || isEthDifferrent;
 }

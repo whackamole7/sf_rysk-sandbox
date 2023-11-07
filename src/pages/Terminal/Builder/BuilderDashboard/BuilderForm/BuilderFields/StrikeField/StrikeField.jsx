@@ -1,16 +1,19 @@
 import StrikeChooser from "./StrikeChooser/StrikeChooser";
 import { awaitLoading } from '../../../../../../../utils/commonUtils';
 import { useEffect } from "react";
-import { fetchHegicStrikesData } from "../../../../../../../network/fetchers/fetchHegicStrikesData";
+import fetchHegicStrikesData from "../../../../../../../network/fetchers/fetchHegicStrikesData";
 import { useChainId } from "wagmi";
 import { echoStrikeChoice, getIsBuy, getIsCall } from '../../../../builderUtils';
 import cx from "classnames";
-import { fetchLyraStrikesData } from "../../../../../../../network/fetchers/fetchLyraStrikesData";
+import fetchLyraStrikesData from "../../../../../../../network/fetchers/fetchLyraStrikesData";
 import useGodEye from "../../../../../../../environment/contextHooks/useGodEye/useGodEye";
 import Spinner from "../../../../../../../components/UI/Spinner/Spinner";
 import { fillStrikesDataArrWithNullStrikes, getUnitedStrikesDataArr } from "./strikeUtils";
 import { getEchoedStrikesIds } from "../../../../builderUtils";
 import { deformatNumberFromInputString } from "../../../../../../../utils/dataTypesUtils/numberUtils";
+import useTokenPriceBySymbol from './../../../../../../../environment/contextHooks/useTokenPrices/useTokenPriceBySymbol';
+import fetchRyskStrikesData from "../../../../../../../network/fetchers/fetchRyskStrikesData";
+import { bigIntFromNumber, convertDataToBigInt } from "../../../../../../../utils/dataTypesUtils/bigIntUtils";
 
 
 const StrikeField = (props) => {
@@ -37,6 +40,7 @@ const StrikeField = (props) => {
 	const [chosenStrikes, setChosenStrikes] = chosenStrikesState;
 	const [areStrikesLoading, setAreStrikesLoading] = areStrikesLoadingState;
 
+	const assetPrice = useTokenPriceBySymbol(asset);
 	
 	const updateStrikesDataArr = () => {
 		setAreStrikesLoading(true);
@@ -48,7 +52,8 @@ const StrikeField = (props) => {
 				amount: deformatNumberFromInputString(amountStr),
 				expiry: chosenDate,
 				isCall: getIsCall(structureKey),
-				isBuy: getIsBuy(structureKey)
+				isBuy: getIsBuy(structureKey),
+				assetPrice
 			}
 			
 			strikesDataArr[i] = {};
@@ -56,19 +61,20 @@ const StrikeField = (props) => {
 				strikesDataArr[i] = {...strikesDataArr[i], ...data };
 			}
 
-			if (strikeParams.isBuy) {
-				fetchPromises.push(
-					fetchHegicStrikesData(chainId, { ...strikeParams })
-						.then(embedInStrikesData)
-				)
-			}
+			fetchPromises.push(
+				fetchHegicStrikesData(chainId, { ...strikeParams })
+					.then(embedInStrikesData)
+			)
 
-			if (lyraMarket) {
-				fetchPromises.push(
-					fetchLyraStrikesData(chainId, lyraMarket, { ...strikeParams }, account)
-						.then(embedInStrikesData)
-				);
-			}
+			fetchPromises.push(
+				fetchLyraStrikesData(chainId, lyraMarket, { ...strikeParams }, account)
+					.then(embedInStrikesData)
+			);
+
+			fetchPromises.push(
+				fetchRyskStrikesData(chainId, { ...strikeParams })
+					.then(embedInStrikesData)
+			)
 		});
 
 		Promise.all(fetchPromises)

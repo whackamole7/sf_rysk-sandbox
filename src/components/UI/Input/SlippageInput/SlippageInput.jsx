@@ -4,6 +4,7 @@ import './SlippageInput.scss';
 import { BUILDER_SWAP_SLIPPAGE } from '../../../../pages/Terminal/Builder/builderConstants';
 import icon_pen from '../../../../img/UI/pen.svg';
 import cx from "classnames";
+import { roundNumber } from '../../../../utils/dataTypesUtils/numberUtils';
 
 
 const SlippageInput = ({
@@ -12,7 +13,7 @@ const SlippageInput = ({
 }) => {
 	
 	const getSlippageStrFromSlippage = (slippage) => {
-		return `${slippage * 100}`;
+		return `${roundNumber(slippage * 100, 6)}`;
 	}
 	
 	const [slippageStr, setSlippageStr] = useState(

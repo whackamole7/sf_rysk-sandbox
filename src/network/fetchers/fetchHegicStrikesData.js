@@ -1,5 +1,4 @@
 import { getContractAbi, getHegicPriceCalculatorContract, getHegicStrategiesAddressesForPeriod } from "../contracts/contractsData";
-import { waitTokenPriceFromChainlink } from '../networkUtils';
 import { bigIntFromNumber, bringToDefaultDecimals, floorBigInt, numberFromBigInt } from '../../utils/dataTypesUtils/bigIntUtils';
 import { getAlchemyProvider } from "../providers";
 import { BigNumber, ethers } from "ethers";
@@ -13,15 +12,20 @@ import { calcHegicDeltaByStrikeScale } from "../../utils/optionsUtils";
 
 
 const PREFIX = "Hegic_";
-const TOKEN_SYMBOL = "USDC.e";
+const MARKET_TOKEN_SYMBOL = "USDC.e";
 
 
-const waitFormattedTokenPriceFromChainlink = async (chainId, tokenSymb) => {
-	const tokenPriceFromChainlink = await waitTokenPriceFromChainlink(chainId, tokenSymb);
-	const numberishTokenPriceFromChainlink = numberFromBigInt(tokenPriceFromChainlink);
 
-	return numberishTokenPriceFromChainlink;
+const validateStrikeParams = (strikeParams) => {
+	const { isBuy } = strikeParams;
+
+	if (!isBuy) {
+		return;
+	}
+
+	return true;
 }
+
 
 const getIsStrategyRelevant = (strategyKey, relevantAsset, shouldBeCall) => {
 	const [strategyType, , strategyAsset] = strategyKey.split("_");
@@ -86,15 +90,15 @@ const waitCalcPremium = async (chainId, strategyKey, strikeParams, amountBigIntD
 					USDC_DECIMALS
 				);
 
-				const TOKEN = getTokenBySymbol(chainId, TOKEN_SYMBOL);
+				const MARKET_TOKEN = getTokenBySymbol(chainId, MARKET_TOKEN_SYMBOL);
 
 				return (
-					swapToUSDC(chainId, TOKEN.address, premium)
+					swapToUSDC(chainId, MARKET_TOKEN.address, premium)
 						.then(premiumInUSDC => {
 							const premiumData = {
 								inUSDC: premiumInUSDC,
 								inMarketToken: premium,
-								marketToken: TOKEN,
+								marketToken: MARKET_TOKEN,
 							};
 							
 							return premiumData;
@@ -104,33 +108,35 @@ const waitCalcPremium = async (chainId, strategyKey, strikeParams, amountBigIntD
 	)
 }
 
-const calcStrike = (strikeScale, tokenPriceFromChainlink) => {
-	return Math.floor(tokenPriceFromChainlink * (strikeScale / 100));
+const calcStrike = (strikeScale, assetPrice) => {
+	const assetPriceNum = numberFromBigInt(assetPrice);
+
+	return Math.floor(assetPriceNum * (strikeScale / 100));
 }
 
 const getStrikeData = (
 	chainId,
 	strategyData,
 	strikeParams,
-	tokenPriceFromChainlink
 ) => {
 	const {
 		protocolName,
-		isCall
+		isCall,
+		assetPrice
 	} = strikeParams;
 	
 	const { strategyKey } = strategyData;
 	const [, strikeScale, ] = strategyKey.split("_");
-	const strike = calcStrike(strikeScale, tokenPriceFromChainlink);
+	const strike = calcStrike(strikeScale, assetPrice);
 	const strikeUtils = getStrikeUtils(chainId, strategyData, strikeParams);
-
 	
-	const delta = calcHegicDeltaByStrikeScale(isCall, strikeScale);
+	const delta = calcHegicDeltaByStrikeScale(strikeParams, strikeScale);
 	
 	return {
 		market: "Hegic",
 		protocolName,
 		strike,
+		isCurrentPrice: strikeScale === "100",
 		isCall,
 		isBuy: true,
 		greeks: {
@@ -202,8 +208,6 @@ const waitStrikesAndPremiumPromisesData = async (
 	const strikesData = {};
 	const premiumPromisesData = {};
 
-	const tokenPriceFromChainlink = await waitFormattedTokenPriceFromChainlink(chainId, asset);
-
 	const strategiesKeys = Object.keys(strategiesAddresses);
 	for (let i = 0; i < strategiesKeys.length; i++) {
 		const strategyKey = strategiesKeys[i];
@@ -217,7 +221,7 @@ const waitStrikesAndPremiumPromisesData = async (
 			continue;
 		}
 
-		const strikeData = getStrikeData(chainId, strategyData, strikeParams, tokenPriceFromChainlink);
+		const strikeData = getStrikeData(chainId, strategyData, strikeParams);
 		const premiumPromise = getPremiumPromise(amount, strikeData);
 
 		const { strike } = strikeData;
@@ -274,7 +278,11 @@ const waitStrikesData = async (chainId, strategiesAddresses, strikeParams) => {
 	return strikesData;
 }
 
-export const fetchHegicStrikesData = async (chainId, strikeParams) => {
+const fetchHegicStrikesData = async (chainId, strikeParams) => {
+	if (!validateStrikeParams(strikeParams)) {
+		return {};
+	}
+	
 	const { expiry } = strikeParams;
 	const period = expiry - Date.now();
 
@@ -292,27 +300,9 @@ export const fetchHegicStrikesData = async (chainId, strikeParams) => {
 		await waitStrikesData(chainId, strategiesAddresses, strikeParams)
 	);
 
-	// todo: remove
-	/* console.log({
-		Rysk_1700: {
-			greeks: { delta: 1, vega: 0, gamma: 0, theta: 0, rho: 0},
-			isBuy: true,
-			isCall: true,
-			market: "Rysk",
-			protocolName: "Rysk",
-			premiumData: {
-				inMarketToken: 66467073000000000000n,
-				inUSDC: 66467073000000000000n,
-				marketToken: getTokenBySymbol(chainId, "USDC"),
-			},
-			strike: 1700,
-			utils: {
-				calcPremium: async (amountBigInt) => {},
-				getBuilderParams: undefined,
-				getCollateralData: async (amountBigInt, options) => {}
-			}
-		}
-	}); */
-
 	return strikesData;
 }
+
+
+
+export default fetchHegicStrikesData;

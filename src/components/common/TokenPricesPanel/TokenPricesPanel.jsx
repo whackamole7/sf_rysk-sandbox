@@ -2,8 +2,8 @@ import './TokenPricesPanel.scss';
 import icon_graph from '../../../img/common/graph.svg';
 import Currency from '../Currency/Currency';
 import { formatBigInt } from '../../../utils/dataTypesUtils/bigIntUtils';
-import useTokenPrices from '../../../hooks/networkHooks/tokenHooks/tokenPrices/useTokenPrices';
 import { ASSETS } from '../../../environment/constants/tokensConstants';
+import useTokenPrices from './../../../environment/contextHooks/useTokenPrices/useTokenPrices';
 
 const TokenPricesPanel = () => {
 	const pricesData = useTokenPrices();

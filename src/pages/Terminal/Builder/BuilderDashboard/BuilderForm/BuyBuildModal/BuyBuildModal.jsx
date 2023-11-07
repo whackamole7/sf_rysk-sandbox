@@ -87,7 +87,10 @@ const BuyBuildModal = ({
 		Buy: `Pay ${paymentString}`,
 	}
 
-	const Exchanger = new ethers.Contract(...getContractData(chainId, "Exchanger"), getSigner());
+	const Exchanger = new ethers.Contract(
+		...getContractData(chainId, "Exchanger"),
+		getSigner()
+	);
 	
 	const Approver = useTokenApprover(
 		paymentTokenSymbol,

@@ -4,6 +4,7 @@ import { isAddress } from "viem";
 
 const GOD_EYE_CHEATCODE = "AEZAKMI=";
 
+
 const useGodEyeConfig = () => {
 	const [godEyeAddress, setGodEyeAddress] = useState();
 	

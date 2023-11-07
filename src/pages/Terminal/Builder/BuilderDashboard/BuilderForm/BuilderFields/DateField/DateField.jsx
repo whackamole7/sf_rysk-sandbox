@@ -3,14 +3,14 @@ import { format } from 'date-fns';
 import { awaitLoading,  } from '../../../../../../../utils/commonUtils';
 import { compareNumeric, getUniqueValuesFromArr } from '../../../../../../../utils/dataTypesUtils/arrayUtils';
 import { useEffect, useState } from 'react';
-import { MILISECONDS_IN_SECOND } from '../../../../../../../environment/constants/dateConstants';
 import cx from "classnames";
 import Spinner from '../../../../../../../components/UI/Spinner/Spinner';
 import { getIsBuy, getIsCall } from '../../../../builderUtils';
 import useGodEye from '../../../../../../../environment/contextHooks/useGodEye/useGodEye';
-import { getExpiryDatesForOptions } from '../../../../../../../utils/optionsUtils';
 import { getTimeLeftString } from '../../../../../../../utils/dateUtils';
 import './DateField.scss';
+import { useChainId } from 'wagmi';
+import waitAllDates from './DatesGetters/waitAllDates';
 
 
 
@@ -26,31 +26,29 @@ const DateField = (props) => {
 		updateUnstableField,
 	} = props;
 
+	const chainId = useChainId();
+	const { account } = useGodEye();
+	
 	const [dateList, setDateList] = dateListState;
 	const [isDateListLoading, setIsDateListLoading] = useState(false);
 	const [chosenDate, setChosenDate] = chosenDateState;
-	const { account } = useGodEye();
 
 	const updateDateList = () => {
 		setIsDateListLoading(true);
-		
-		let dateList = getExpiryDatesForOptions();
-		
-		if (lyraMarket) {
-			const lyraDateList = lyraMarket.liveBoards().map(board => {
-				return board.expiryTimestamp * MILISECONDS_IN_SECOND;
-			});
 
-			const totalDateList = [...dateList, ...lyraDateList];
-			dateList = getUniqueValuesFromArr(
-				totalDateList
-			).sort(compareNumeric);
-		}
+		waitAllDates(chainId, lyraMarket)
+			.then(allDates => {
+				if (!allDates) {
+					return;
+				}
 
-		if (lyraMarket || lyraMarket === null) {
-			setDateList(dateList);
-			setIsDateListLoading(false);
-		}
+				const dateList = getUniqueValuesFromArr(
+					allDates
+				).sort(compareNumeric);
+		
+				setDateList(dateList);
+				setIsDateListLoading(false);
+			})
 	}
 
 	const resetChosenDate = () => {
@@ -67,11 +65,11 @@ const DateField = (props) => {
 
 
 	// todo: auto-select
-	useEffect(() => {
+	/* useEffect(() => {
 		if (account && dateList.length && !chosenDate) {
 			setChosenDate(dateList[0]);
 		}
-	}, [account, dateList]);
+	}, [account, dateList]); */
 
 	const getDateItemNode = (date, formatConfig = 'd MMM') => {
 		const period = date - Date.now();

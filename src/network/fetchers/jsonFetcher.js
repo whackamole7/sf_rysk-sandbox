@@ -1,8 +1,11 @@
 
 
-export const jsonFetcher = (url, callback) => fetch(url).then(res => res.json().then(res => {
+const jsonFetcher = (url, callback) => fetch(url).then(res => res.json().then(res => {
 	if (callback) {
 		return callback(res);
 	}
 	return res;
 }));
+
+
+export default jsonFetcher;

@@ -10,6 +10,11 @@
         "internalType": "address",
         "name": "_roleManager",
         "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_weth9",
+        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
@@ -263,6 +268,19 @@
     "name": "transferOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "weth9",
+    "outputs": [
+      {
+        "internalType": "contract IWETH9",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   }
 ]

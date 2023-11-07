@@ -12,8 +12,7 @@ import { MILISECONDS_IN_SECOND } from "../../../environment/constants/dateConsta
 import { bringTokenAmountToDefaultDecimals } from './../../../utils/tokenUtils';
 import { HEGIC_DECIMALS, USDC_DECIMALS } from "../../../environment/constants/tokensConstants";
 import { calcHegicDeltaByAssetPrice, calcPnlPercentage } from "../../../utils/optionsUtils";
-import useTokenPrices from './../tokenHooks/tokenPrices/useTokenPrices';
-
+import useTokenPrices from "../../../environment/contextHooks/useTokenPrices/useTokenPrices";
 
 const PROMISES_LIMIT = 13;
 
@@ -268,9 +267,13 @@ const waitPremiumAndPnl = async (chainId, position, strategyAddress) => {
 }
 
 const getGreeks = (position, assetPrice) => {
-	const { isCall, strike } = position;
-
-	const delta = calcHegicDeltaByAssetPrice(isCall, strike, assetPrice);
+	const optionData = {
+		strike: position.strike,
+		isCall: position.isCall,
+		amount: position.data.amount,
+	}
+	
+	const delta = calcHegicDeltaByAssetPrice(optionData, assetPrice);
 	
 	return {
 		delta,

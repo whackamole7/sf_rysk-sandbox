@@ -2,9 +2,8 @@ import './BuilderCalculations.scss';
 import BuilderCost from './BuilderCost/BuilderCost';
 import BuilderGreeks from './BuilderGreeks/BuilderGreeks';
 import BuilderSwap from './BuilderSwap/BuilderSwap';
-import useBuilderFormButtonHandler from './../../../builderHooks/useBuilderFormButtonHandler';
+import useBuilderFormButton from './../../../builderHooks/useBuilderFormButton';
 import useGodEye from '../../../../../../environment/contextHooks/useGodEye/useGodEye';
-import useManageWallet from './../../../../../../hooks/networkHooks/useManageWallet';
 import { useEffect, useState } from 'react';
 import Button from './../../../../../../components/UI/Button/Button';
 import { BUILDER_STRATEGIES_CONFIG } from '../../../builderConstants';
@@ -23,8 +22,6 @@ const BuilderCalculations = ({
 	swapSlippageState
 }) => {
 
-	const { isConnected } = useGodEye();
-	const { connectWallet } = useManageWallet();
 	const chainId = useChainId();
 	
 	const [paymentTokenSymbol, setPaymentTokenSymbol] = useLocalStorage(
@@ -52,24 +49,15 @@ const BuilderCalculations = ({
 	const [youPay,] = youPayState;
 
 	const strategyStructure = BUILDER_STRATEGIES_CONFIG[strategy].structure;
-	const { getIsBtnEnabled, getBtnText } = useBuilderFormButtonHandler(
+	const BuilderFormButton = useBuilderFormButton(
 		amountStr,
 		strategyStructure,
 		chosenStrikes,
 		collateralDataArr,
 		youPay?.inPaymentToken,
-		paymentToken.balance?.inDefaultDecimals
+		paymentToken.balance?.inDefaultDecimals,
+		openBuyModal
 	);
-
-	const BuilderFormButton = (
-		<Button
-			className="BuilderForm__button"
-			onClick={isConnected ? openBuyModal : connectWallet}
-			isDisabled={!getIsBtnEnabled()}
-		>
-			{getBtnText()}
-		</Button>
-	)
 
 	return (
 		<div className="BuilderCalculations">

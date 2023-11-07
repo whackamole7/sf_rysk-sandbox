@@ -3,8 +3,7 @@ import { compareNumeric } from '../../../../../../../../utils/dataTypesUtils/arr
 import { compareObjectsByNumericValue } from '../../../../../../../../utils/dataTypesUtils/objectUtils';
 import './StrikeChooser.scss';
 import Button from '../../../../../../../../components/UI/Button/Button';
-import useTokenPriceBySymbol from '../../../../../../../../hooks/networkHooks/tokenHooks/tokenPrices/useTokenPriceBySymbol';
-import { checkIfStrikeCloseToCurrentPrice, checkIsOptionITM } from '../../../../../../../../utils/optionsUtils';
+import { checkIsOptionITM } from '../../../../../../../../utils/optionsUtils';
 import cx from "classnames";
 import { useTogglePopup } from '../../../../../../../../hooks/useTogglePopup';
 import StrikeInfoBox from './StrikeInfoBox/StrikeInfoBox';
@@ -19,6 +18,7 @@ import { getHasSufficientStrikes, getIsCall } from '../../../../../builderUtils'
 import { MARKETS_ICONS } from '../../../../../../../../environment/constants/optionsConstants';
 import { separateThousands } from '../../../../../../../../utils/dataTypesUtils/numberUtils';
 import useIsMobile from './../../../../../../../../hooks/windowDimensionsHooks/useIsMobile';
+import useTokenPriceBySymbol from './../../../../../../../../environment/contextHooks/useTokenPrices/useTokenPriceBySymbol';
 
 
 const StrikeChooser = ({
@@ -36,7 +36,9 @@ const StrikeChooser = ({
 	const { isConnected } = useGodEye();
 	
 	const currentPriceBigInt = useTokenPriceBySymbol(asset);
-	const currentPrice = numberFromBigInt(currentPriceBigInt);
+	const currentPrice = Math.floor(
+		numberFromBigInt(currentPriceBigInt)
+	);
 
 	const isFirstRow = id === 0;
 
@@ -45,12 +47,12 @@ const StrikeChooser = ({
 	const [chosenStrikeMarketsDataArr, setChosenStrikeMarketsDataArr] = useState(null);
 
 	// todo: auto-select
-	useEffect(() => {
+	/* useEffect(() => {
 		if (isAutoSelectEnabled && strikesData && !chosenStrikeData) {
 			const firstMarketsStrikeData = Object.values(strikesData).find(marketsData => {
 				const firstMarketStrikeData = marketsData[0];
 
-				return !firstMarketStrikeData.isAbsent;
+				return !firstMarketStrikeData.isDummy;
 			});
 
 			if (!firstMarketsStrikeData) {
@@ -61,18 +63,20 @@ const StrikeChooser = ({
 			
 			setChosenStrikeData(firstStrikeData);
 		}
-	}, [strikesData]);
+	}, [strikesData]); */
 	
 
 	const clearStrikesDataOfCurrentPrice = (strikesData) => {
-		const clearedStrikesData = { ...strikesData };
+		const clearedStrikesData = {};
 		
 		for (const strike in strikesData) {
 			const strikeMarketsData = strikesData[strike];
 			const firstMarketStrikeData = strikeMarketsData[0];
+
+			const { isCurrentPrice, isDummy } = firstMarketStrikeData;
 			
-			if (firstMarketStrikeData.isCurrentPrice) {
-				clearedStrikesData[strike][0].isCurrentPrice = false;
+			if ( !(isCurrentPrice && isDummy) ) {
+				clearedStrikesData[strike] = strikesData[strike];
 			}
 		}
 
@@ -82,23 +86,27 @@ const StrikeChooser = ({
 	// todo: refactor
 	const getStrikesDataWithCurrentPrice = () => {
 		const resultStrikesData = clearStrikesDataOfCurrentPrice(strikesData);
-		const strikes = getStrikesFromStrikesData(resultStrikesData);
 
-		const currentPriceStrike = strikes.find(strike => {
-			return checkIfStrikeCloseToCurrentPrice(strike, currentPrice);
-		});
+		let currentPriceStrikeData;
+		for (const strike in strikesData) {
+			const firstMarketStrikeData = strikesData[strike][0];
 
+			const isCurrentPrice = firstMarketStrikeData.isCurrentPrice ||
+				currentPrice === firstMarketStrikeData.strike;
+			
+			if (isCurrentPrice) {
+				firstMarketStrikeData.isCurrentPrice = true;
+				currentPriceStrikeData = firstMarketStrikeData;
+				break;
+			}
+		}
 		
-		if (!currentPriceStrike) {
-			const currentPriceRounded = Math.floor(currentPrice);
-
-			resultStrikesData[currentPriceRounded] = [{
-				strike: currentPriceRounded,
+		if (!currentPriceStrikeData) {
+			resultStrikesData[currentPrice] = [{
+				strike: currentPrice,
 				isCurrentPrice: true,
+				isDummy: true,
 			}];
-		} else {
-			const currentPriceStrikeData = resultStrikesData[currentPriceStrike][0];
-			currentPriceStrikeData.isCurrentPrice = true;
 		}
 
 		return resultStrikesData;
@@ -154,9 +162,9 @@ const StrikeChooser = ({
 				{strikes.map((strike, i) => {
 					const strikeMarketsDataArr = dataArr[i];
 					const templateStrikeData = strikeMarketsDataArr[0];
-					const { isCurrentPrice, isAbsent, market: templateMarket } = templateStrikeData;
+					const { isCurrentPrice, isAbsent, isDummy } = templateStrikeData;
 
-					if (isCurrentPrice && !templateMarket) {
+					if (isCurrentPrice && isDummy) {
 						return (
 							<StrikeCurrentPriceItem
 								key={`current_price`}

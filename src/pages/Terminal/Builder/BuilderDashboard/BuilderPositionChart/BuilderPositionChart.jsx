@@ -6,9 +6,9 @@ import { numberFromBigInt } from './../../../../../utils/dataTypesUtils/bigIntUt
 import { deformatNumberFromInputString, separateThousands } from "../../../../../utils/dataTypesUtils/numberUtils";
 import { Area, AreaChart, CartesianGrid, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { BUILDER_STRATEGIES_CONFIG } from "../../builderConstants";
-import useTokenPriceBySymbol from "../../../../../hooks/networkHooks/tokenHooks/tokenPrices/useTokenPriceBySymbol";
 import { GREEN, GREY, LGREY, RED } from "../../../../../environment/constants/styleConstants";
 import cx from "classnames";
+import useTokenPriceBySymbol from './../../../../../environment/contextHooks/useTokenPrices/useTokenPriceBySymbol';
 
 
 

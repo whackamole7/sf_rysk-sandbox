@@ -4,7 +4,7 @@ import './Sandbox.scss';
 import useHegicPositions from './../../hooks/networkHooks/positionsHooks/useHegicPositions';
 import useLyraPositions from './../../hooks/networkHooks/positionsHooks/useLyraPositions';
 import { useEffect } from 'react';
-import useTokenPriceBySymbol from './../../hooks/networkHooks/tokenHooks/tokenPrices/useTokenPriceBySymbol';
+import useTokenPrices from '../../environment/contextHooks/useTokenPrices/useTokenPrices';
 
 
 const Sandbox = () => {
@@ -13,20 +13,18 @@ const Sandbox = () => {
 	const hegicPositions = useHegicPositions();
 	const lyraPositions = useLyraPositions();
 
-	const priceETH = useTokenPriceBySymbol("ETH");
-	const priceBTC = useTokenPriceBySymbol("BTC");
-
+	const { ETH: priceETH, BTC: priceBTC } = useTokenPrices() ?? {};
 	console.log(priceETH, priceBTC);
 
 	useEffect(() => {
-		if (hegicPositions.length) {
+		if (hegicPositions) {
 			console.log(hegicPositions);
 
 			// logs on Hegic Positions
 			// ...
 		}
 
-		if (lyraPositions.length) {
+		if (lyraPositions) {
 			console.log(lyraPositions);
 
 			// logs on Lyra Positions
@@ -87,14 +85,14 @@ const Sandbox = () => {
 			</p>
 
 			<div style={{ margin: "10px 0" }}>
-				{lyraPositions.map(position => {
+				{lyraPositions?.map(position => {
 					// Calculations with position...
 					
 					const result = position.premium;
 					const resultFormatted = formatBigInt(result);
 					
 					return (
-						<div>
+						<div key={position.id}>
 							{resultFormatted} <span className='muted'>({position.asset})</span>
 						</div>
 					)

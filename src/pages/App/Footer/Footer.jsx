@@ -24,7 +24,7 @@ const Footer = () => {
 		{
 			name: "Github",
 			icon: icon_Github,
-			url: "https://github.com/DeDeLend",
+			url: "https://github.com/SharwaFinance",
 		},
 		{
 			name: "Mirror",

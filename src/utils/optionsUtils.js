@@ -1,7 +1,7 @@
 import { EXPIRY_HOUR_UTC, EXPIRY_PERIODS_IN_MS } from "../environment/constants/optionsConstants";
 import { swapToUSDC } from "../network/helpers/Swapper";
 import { getTokenBySymbol } from "../network/tokens";
-import { absBigInt, convertDataToBigInt, divBigIntsSavingDecimals, multiplyBigIntByNumber } from "./dataTypesUtils/bigIntUtils";
+import { absBigInt, convertDataToBigInt, divBigIntsSavingDecimals, multiplyBigIntByNumber, numberFromBigInt } from "./dataTypesUtils/bigIntUtils";
 import { roundNumber } from "./dataTypesUtils/numberUtils";
 import { sumObjectValues } from './dataTypesUtils/objectUtils';
 
@@ -15,59 +15,33 @@ export const checkIsOptionITM = (isCall, strike, currentPrice) => {
 }
 
 
-export const checkIfStrikeCloseToCurrentPrice = (strike, currentPrice, range = 5) => {
-	return Math.abs(strike - currentPrice) < range;
-}
-
-
-export const calcHegicDeltaByAssetPrice = (isCall, strike, assetPrice) => {
+export const calcHegicDeltaByAssetPrice = (optionData, assetPrice) => {
+	const { isCall, strike, amount } = optionData;
+	const amountNum = numberFromBigInt(amount);
+	
 	const delta = isCall
 		? strike < assetPrice
-			? 1 : 0
+			? amountNum : 0
 		: strike > assetPrice
-			? -1 : 0;
+			? -amountNum : 0;
 
 	return delta;
 }
 
-export const calcHegicDeltaByStrikeScale = (isCall, strikeScale) => {
+export const calcHegicDeltaByStrikeScale = (strikeParams, strikeScale) => {
+	const {
+		isCall,
+		amount
+	} = strikeParams;
+
+	
 	const delta = isCall
 		? Number(strikeScale) < 100
-			? 1: 0
+			? amount : 0
 		: Number(strikeScale) > 100
-			? -1 : 0;
+			? -amount : 0;
 
 	return delta;
-}
-
-
-
-export const getExpiryDatesForOptions = () => {
-	const expiryDates = EXPIRY_PERIODS_IN_MS.map((period, i) => {
-		const expiryDate = new Date(Date.now() + period);
-
-		const isFirst = i === 0;
-		const isLast = i === (EXPIRY_PERIODS_IN_MS.length - 1);
-		
-		const isExpiryHourPassed = expiryDate.getUTCHours() >= EXPIRY_HOUR_UTC;
-		const expiryUtcDate = expiryDate.getUTCDate();
-
-		if (isFirst && isExpiryHourPassed) {
-			expiryDate.setUTCDate(expiryUtcDate + 1);
-		}
-		if (isLast && !isExpiryHourPassed) {
-			expiryDate.setUTCDate(expiryUtcDate - 1);
-		}
-		
-		expiryDate.setUTCHours(EXPIRY_HOUR_UTC);
-		expiryDate.setUTCMinutes(0);
-		expiryDate.setUTCSeconds(0);
-		expiryDate.setUTCMilliseconds(0);
-
-		return expiryDate.getTime();
-	})
-
-	return expiryDates;
 }
 
 

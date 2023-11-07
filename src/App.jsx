@@ -1,8 +1,7 @@
 import { HashRouter } from 'react-router-dom';
 import Header from './pages/App/Header/Header';
 import './style/globals.scss';
-// todo: ErrorBoundary
-// import { ErrorBoundary } from 'react-error-boundary';
+import { ErrorBoundary } from 'react-error-boundary';
 import { WagmiConfig, useNetwork } from 'wagmi';
 import { getWagmiConfig } from './network/networkUtils';
 import Toasts from './components/UI/Toasts/Toasts';
@@ -10,10 +9,10 @@ import UnsupportedChainErrorModal from './components/common/ErorrModals/Unsuppor
 import GodEyeConfig from './components/configs/GodEyeConfig';
 import AppRouter from './pages/App/AppRouter/AppRouter';
 import Tooltips from './components/configs/Tooltips';
-// todo: ErrorBoundary
-// import GlobalErrorModal from './components/common/ErorrModals/GlobalErrorModal/GlobalErrorModal';
+import GlobalErrorModal from './components/common/ErorrModals/GlobalErrorModal/GlobalErrorModal';
 import Footer from './pages/App/Footer/Footer';
 import GlobalStickyMessage from './components/common/GlobalStickyMessage/GlobalStickyMessage';
+import TokenPricesConfig from './components/configs/TokenPricesConfig';
 
 
 function AppContent() {
@@ -52,21 +51,23 @@ function AppContent() {
 function App() {
 	
 	return (
-		// <ErrorBoundary fallbackRender={GlobalErrorModal} /* todo: ErrorBoundary */>
+		<ErrorBoundary fallbackRender={/* GlobalErrorModal */ null} /* ErrorBoundary */>
 		<>
 			<Toasts />
 			<Tooltips />
 			<WagmiConfig config={getWagmiConfig()}>
 				<HashRouter>
 					<GodEyeConfig>
+						<TokenPricesConfig>
 
-						<AppContent />
+							<AppContent />
 
+						</TokenPricesConfig>
 					</GodEyeConfig>
 				</HashRouter>
 			</WagmiConfig>
 		</>
-		// </ErrorBoundary>
+		</ErrorBoundary>
 	)
 }
 

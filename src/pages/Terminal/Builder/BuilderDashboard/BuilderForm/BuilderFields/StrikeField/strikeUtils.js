@@ -61,7 +61,7 @@ export const fillStrikesDataArrWithNullStrikes = (strikesDataArr) => {
 			const isStrikeAbsent = curStrikes.indexOf(strike) === -1;
 			if (isStrikeAbsent) {
 				filledStrikesData[strike] = [
-					{ strike, isAbsent: true }
+					{ strike, isAbsent: true, isDummy: true }
 				]
 			}
 		})

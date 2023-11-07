@@ -53,6 +53,7 @@ export const getExplorerUrl = (chainId) => {
 }
 
 
+// todo: improve
 export const waitTokenPriceFromChainlink = async (chainId, tokenSymbol) => {
 	const chainlinkContractData = getContractData(chainId, `Chainlink_${tokenSymbol}`);
 	const alchemyProvider = getAlchemyProvider(chainId);

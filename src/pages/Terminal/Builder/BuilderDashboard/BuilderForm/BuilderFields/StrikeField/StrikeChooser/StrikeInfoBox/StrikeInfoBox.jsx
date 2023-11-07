@@ -24,6 +24,8 @@ const StrikeInfoBox = (props) => {
 	const [premiums, setPremiums] = useState([]);
 
 	const updateMarketsPremiums = () => {
+		const updatedPremiums = [];
+		
 		strikeMarketsDataArr.forEach((strikeData, i) => {
 			const amountBigInt = bigIntFromNumber(
 				deformatNumberFromInputString(amountStr)
@@ -31,15 +33,15 @@ const StrikeInfoBox = (props) => {
 
 			strikeData.utils.calcPremium(amountBigInt)
 				.then(premiumData => {
-					premiums[i] = premiumData;
-					setPremiums([...premiums]);
+					updatedPremiums[i] = premiumData;
+					setPremiums([...updatedPremiums]);
 				});
 		})
 	}
 
 	useEffect(() => {
 		setPremiums([]);
-
+		
 		if (strikeMarketsDataArr) {
 			updateMarketsPremiums();
 		}

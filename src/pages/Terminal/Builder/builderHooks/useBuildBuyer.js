@@ -8,6 +8,7 @@ import Swapper, { getSwapperPath } from "../../../../network/helpers/Swapper";
 import { bringFromDefaultDecimals, numberFromBigInt } from "../../../../utils/dataTypesUtils/bigIntUtils";
 import { sendTransaction } from "../../../../network/contracts/contractsUtils";
 import { getBigIntWithSlippage } from "../../../../utils/optionsUtils";
+import { getAreTokensDifferent } from "../../../../utils/tokenUtils";
 
 
 const useBuildBuyer = (
@@ -91,7 +92,7 @@ const useBuildBuyer = (
 		const path = getSwapperPath(paymentToken.address, marketToken.address);
 		const amountOutMinimum = decompositionItem.inMarketToken;
 		
-		const shouldSwap = paymentToken.address !== marketToken.address;
+		const shouldSwap = getAreTokensDifferent(paymentToken, marketToken);
 
 		return (
 			Swapper(chainId, marketToken.address, paymentToken.address, amountOutMinimum)
@@ -100,8 +101,17 @@ const useBuildBuyer = (
 
 					return amountInWithSlippage;
 				}).then(amountIn => {
+					const amountInTokenDecimals = bringFromDefaultDecimals(
+						amountIn,
+						paymentToken.decimals,
+					);
+					const amountOutTokenDecimals = bringFromDefaultDecimals(
+						amountOutMinimum,
+						marketToken.decimals
+					);
+					
 					if (isETH) {
-						ethAmountsIn.push(amountIn);
+						ethAmountsIn.push(amountInTokenDecimals);
 						setEthAmountsIn([...ethAmountsIn]);
 					}
 
@@ -110,14 +120,8 @@ const useBuildBuyer = (
 							path,
 							tokenIn: paymentToken.address,
 							tokenOut: marketToken.address,
-							amountIn: bringFromDefaultDecimals(
-								amountIn,
-								paymentToken.decimals,
-							),
-							amountOutMinimum: bringFromDefaultDecimals(
-								amountOutMinimum,
-								marketToken.decimals
-							),
+							amountIn: amountInTokenDecimals,
+							amountOutMinimum: amountOutTokenDecimals,
 							isETH,
 							swap: shouldSwap
 						}).then((swapData) => {
@@ -177,7 +181,7 @@ const useBuildBuyer = (
 							buyArgs.swapDataArr,
 							buyArgs.productType,
 							ethAmountsIn.length
-								? { value: sumEthAmountsIn(), }
+								? { value: sumEthAmountsIn() }
 								: {},
 						],
 						`${amountNum} ${isPlural ? pluralStr : strategy} opened.`,

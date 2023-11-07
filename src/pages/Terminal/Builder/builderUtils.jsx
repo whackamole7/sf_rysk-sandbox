@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 import { getAlchemyProvider } from "../../../network/providers";
 import { getContractData } from "../../../network/contracts/contractsData";
+import { getAreTokensDifferent } from './../../../utils/tokenUtils';
 
 
 
@@ -183,7 +184,7 @@ export const getShouldSwap = (youPay, newPaymentToken) => {
 				return false;
 			}
 	
-			return marketToken.address !== paymentToken.address;
+			return getAreTokensDifferent(marketToken, paymentToken);
 		})
 	);
 
